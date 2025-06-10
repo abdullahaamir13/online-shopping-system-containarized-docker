@@ -17,7 +17,7 @@ Each service is containerized using Docker and communicates via REST APIs.
 |--------------|-----------------------------|
 | Frontend     | HTML, CSS, JavaScript / React |
 | Backend      | Node.js (Express) / Python (Flask/FastAPI), PHP |
-| Database     | MongoDB / MySQL             |
+| Database     | MongoDB                     |
 | Containerization | Docker                  |
 | Communication| REST APIs                   |
 
