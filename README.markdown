@@ -76,8 +76,5 @@ The system follows a dependency chain:
 - Implement authentication for admin endpoints in Product Service.
 - Enhance Notification Service with email/SMS channels and rate limiting.
 
-## License
-[Add license if applicable, e.g., MIT License]
-
 ## Contributors
 See team details above.
