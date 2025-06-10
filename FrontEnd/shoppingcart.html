@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Shopping Cart</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --accent: #60a5fa;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --border: #334155;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header {
+      background-color: var(--bg-secondary);
+      padding: 1.5rem;
+      width: 100%;
+      max-width: 900px;
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+    main {
+      width: 100%;
+      max-width: 900px;
+      background-color: var(--bg-tertiary);
+      border-radius: 16px;
+      padding: 2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+    h1 {
+      margin-top: 0;
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+      text-align: center;
+      color: var(--accent);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1.5rem;
+    }
+    thead { background-color: var(--bg-secondary); }
+    th, td {
+      padding: 1rem 1.2rem;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+      font-size: 1rem;
+    }
+    th { font-weight: 600; }
+    td img {
+      width: 60px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-right: 1rem;
+    }
+    .product-info {
+      display: flex;
+      align-items: center;
+    }
+    .quantity-controls {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .quantity-controls button {
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.2rem;
+      user-select: none;
+      transition: background-color 0.3s ease;
+    }
+    .quantity-controls button:hover {
+      background-color: var(--primary);
+      border-color: var(--primary);
+    }
+    .quantity-controls input {
+      width: 40px;
+      text-align: center;
+      background-color: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text-primary);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.25rem 0;
+      -moz-appearance: textfield;
+    }
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
+    }
+    .price {
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .total-row td {
+      font-size: 1.2rem;
+      font-weight: 700;
+      border-top: 2px solid var(--border);
+    }
+    .checkout-btn {
+      width: 100%;
+      padding: 1rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      border: none;
+      border-radius: 14px;
+      color: white;
+      font-size: 1.3rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-bottom: 1.5rem;
+    }
+    .checkout-btn:hover {
+      background: linear-gradient(135deg, var(--accent), var(--primary));
+    }
+    .remove-btn {
+      background-color: #ef4444;
+      border: none;
+      color: white;
+      font-weight: 700;
+      padding: 0.25rem 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    .remove-btn:hover { background-color: #dc2626; }
+    .continue-shopping {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      background-color: var(--bg-secondary);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background-color 0.3s ease;
+    }
+    .continue-shopping:hover {
+      background-color: var(--primary);
+    }
+    @media (max-width: 600px) {
+      td, th { font-size: 0.9rem; padding: 0.8rem; }
+      td img { width: 45px; height: 60px; }
+      .quantity-controls input { width: 30px; }
+    }
+  </style>
+</head>
+<body>
+  <header>Shopping Cart</header>
+  <main>
+    <h1>Your Cart</h1>
+    <a href="ProductPage.html" class="continue-shopping">&larr; Continue Shopping</a>
+
+    <table aria-label="Shopping cart items">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+          <th>Remove</th>
+        </tr>
+      </thead>
+      <tbody id="cart-body"></tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td colspan="4">Total</td>
+          <td class="price" id="total-price">$0.00</td>
+        </tr>
+      </tfoot>
+    </table>
+
+    <button class="checkout-btn" id="checkout-btn">Proceed to Checkout</button>
+  </main>
+
+  <script>
+    const cartBody = document.getElementById('cart-body');
+    const totalPriceEl = document.getElementById('total-price');
+    const checkoutBtn = document.getElementById('checkout-btn');
+
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (cart.length === 0) {
+        cartBody.innerHTML = `<tr><td colspan="5" style="text-align:center; padding: 2rem; font-size: 1.2rem; color: var(--text-secondary);">Your cart is empty.</td></tr>`;
+        totalPriceEl.textContent = "$0.00";
+        return;
+      }
+
+      cartBody.innerHTML = '';
+      cart.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="product-info"><img src="${item.img}" alt="${item.name}" />${item.name}</td>
+          <td class="price">$${item.price.toFixed(2)}</td>
+          <td>
+            <div class="quantity-controls">
+              <button data-index="${index}" class="decrease">−</button>
+              <input type="number" min="1" value="${item.quantity || 1}" data-index="${index}" />
+              <button data-index="${index}" class="increase">+</button>
+            </div>
+          </td>
+          <td class="price">$${(item.price * (item.quantity || 1)).toFixed(2)}</td>
+          <td><button class="remove-btn" data-index="${index}">Remove</button></td>
+        `;
+        cartBody.appendChild(tr);
+      });
+
+      attachEventListeners();
+      updateTotals();
+    }
+
+    function updateTotals() {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      let total = cart.reduce((sum, item) => sum + item.price * (item.quantity || 1), 0);
+      totalPriceEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    function attachEventListeners() {
+      document.querySelectorAll('.decrease').forEach(button => {
+        button.addEventListener('click', e => {
+          const index = +e.target.dataset.index;
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          if (cart[index].quantity > 1) cart[index].quantity--;
+          localStorage.setItem('cart', JSON.stringify(cart));
+          loadCart();
+        });
+      });
+
+      document.querySelectorAll('.increase').forEach(button => {
+        button.addEventListener('click', e => {
+          const index = +e.target.dataset.index;
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart[index].quantity = (cart[index].quantity || 1) + 1;
+          localStorage.setItem('cart', JSON.stringify(cart));
+          loadCart();
+        });
+      });
+
+      document.querySelectorAll('.quantity-controls input').forEach(input => {
+        input.addEventListener('change', e => {
+          const index = +e.target.dataset.index;
+          let quantity = +e.target.value;
+          quantity = isNaN(quantity) || quantity < 1 ? 1 : quantity;
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart[index].quantity = quantity;
+          localStorage.setItem('cart', JSON.stringify(cart));
+          loadCart();
+        });
+      });
+
+      document.querySelectorAll('.remove-btn').forEach(button => {
+        button.addEventListener('click', e => {
+          const index = +e.target.dataset.index;
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          cart.splice(index, 1);
+          localStorage.setItem('cart', JSON.stringify(cart));
+          loadCart();
+        });
+      });
+    }
+
+    checkoutBtn.addEventListener('click', () => {
+      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+      if (!isLoggedIn) {
+        window.location.href = 'login.html';
+      } else {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        sessionStorage.setItem('order', JSON.stringify(cart));
+        window.location.href = 'checkout.html';
+      }
+    });
+
+    window.addEventListener('DOMContentLoaded', loadCart);
+  </script>
+</body>
+</html>

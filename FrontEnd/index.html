@@ -1,0 +1,1431 @@
+
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Modern Bookstore</title>
+  <style>
+    /* Professional Dark Theme with White Accents */
+    :root {
+      --primary: #ffffff;
+      --primary-dark: #f8fafc;
+      --primary-light: #1e293b;
+      --secondary: #3b82f6;
+      --secondary-dark: #2563eb;
+      --secondary-light: #1e3a8a;
+      --dark: #ffffff;
+      --dark-blue: #0f172a;
+      --light: #0f172a;
+      --gray: #cbd5e1;
+      --gray-light: #334155;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --navy: #ffffff;
+      --steel-blue: #94a3b8;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --border-light: #475569;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      line-height: 1.6;
+    }
+
+    /* Header & Navigation */
+    header {
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      padding: 1.2rem 5%;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      transition: transform 0.3s ease;
+    }
+
+    .logo:hover {
+      transform: scale(1.05);
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    .logo-icon {
+      color: var(--accent);
+      font-size: 1.75rem;
+    }
+
+    /* Modern navigation */
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    nav a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: all 0.3s ease;
+      position: relative;
+      padding: 0.6rem 0.8rem;
+      border-radius: 8px;
+    }
+
+    nav a:hover {
+      color: var(--text-primary);
+      background-color: var(--bg-tertiary);
+      transform: translateY(-2px);
+    }
+
+    nav a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(to right, var(--accent), #93c5fd);
+      transition: width 0.3s ease;
+    }
+
+    nav a:hover::after {
+      width: 70%;
+    }
+
+    .cart-link {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      padding: 0.6rem 1rem;
+      border-radius: 8px;
+      color: white;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(59, 130, 246, 0.25);
+    }
+
+    .cart-link:hover {
+      background: linear-gradient(135deg, var(--secondary-dark), var(--secondary));
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(59, 130, 246, 0.35);
+    }
+
+    /* Search functionality */
+    .search-container {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 1rem 1.5rem;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      font-size: 1rem;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+    }
+
+    .search-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 4px 12px rgba(96, 165, 250, 0.15);
+    }
+
+    .search-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .search-button {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.5rem 1.25rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(59, 130, 246, 0.2);
+    }
+
+    .search-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(59, 130, 246, 0.3);
+      background: linear-gradient(135deg, var(--secondary-dark), var(--secondary));
+    }
+    
+    /* Responsive search */
+    .header-search {
+      display: none;
+      width: 100%;
+      margin-top: 1rem;
+    }
+    
+    .header-search .search-container {
+      width: 100%;
+      max-width: 100%;
+    }
+    
+    .search-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    
+    .search-toggle:hover {
+      color: var(--text-primary);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      padding: 6rem 5%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.05) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero h2 {
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero .search-container {
+      max-width: 600px;
+    }
+
+    /* Book Collection */
+    .collection-header {
+      text-align: center;
+      padding: 4rem 5% 2rem;
+      background: var(--bg-primary);
+    }
+
+    .collection-header h2 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: 0.8rem;
+      position: relative;
+      display: inline-block;
+    }
+
+    .collection-header h2::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(to right, var(--secondary), var(--accent));
+      border-radius: 3px;
+    }
+
+    .collection-header p {
+      color: var(--text-secondary);
+      font-size: 1.1rem;
+      max-width: 600px;
+      margin: 1.5rem auto 0;
+    }
+
+    /* Book cards */
+    .book-card {
+      background-color: var(--bg-secondary);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--border);
+    }
+
+    .book-card:hover {
+      transform: translateY(-12px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border-color: var(--accent);
+    }
+
+    .book-card-img-container {
+      height: 280px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .book-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s ease;
+    }
+
+    .book-card:hover img {
+      transform: scale(1.08);
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+      border-radius: 6px;
+      box-shadow: 0 4px 8px rgba(239, 68, 68, 0.25);
+    }
+
+    .book-info {
+      padding: 1.5rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .book-title {
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin: 0 0 0.5rem 0;
+      color: var(--text-primary);
+      line-height: 1.4;
+    }
+
+    .book-author {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin: 0 0 1rem 0;
+    }
+
+    .price-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .book-price {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.2rem;
+    }
+
+    .original-price {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-decoration: line-through;
+    }
+
+    .book-card-actions {
+      display: flex;
+      gap: 0.75rem;
+    }
+
+    .add-to-cart-btn {
+      flex: 1;
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      border: none;
+      color: white;
+      padding: 0.85rem 0;
+      text-align: center;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(59, 130, 246, 0.15);
+    }
+
+    .add-to-cart-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 15px rgba(59, 130, 246, 0.25);
+      background: linear-gradient(135deg, var(--secondary-dark), var(--secondary));
+    }
+
+    .wishlist-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: var(--bg-tertiary);
+      border: none;
+      width: 45px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      color: var(--accent);
+      font-size: 1.2rem;
+      border: 1px solid var(--border);
+    }
+
+    .wishlist-btn:hover {
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transform: translateY(-3px);
+      border-color: var(--accent);
+    }
+
+    /* Rating stars */
+    .rating {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .stars {
+      color: #fbbf24;
+      display: flex;
+    }
+
+    .review-count {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Newsletter section */
+    .newsletter {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      color: white;
+      padding: 5rem 5%;
+      text-align: center;
+      border-radius: 20px;
+      margin: 4rem 5% 0;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .newsletter::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(96, 165, 250, 0.1) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    .newsletter-content {
+      max-width: 600px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .newsletter h3 {
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1.2rem;
+      color: var(--text-primary);
+    }
+
+    .newsletter p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+    }
+
+    .newsletter-form {
+      display: flex;
+      gap: 0.75rem;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 1rem;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .newsletter-input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .newsletter-input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    }
+
+    .newsletter-btn {
+      background: linear-gradient(135deg, var(--secondary), var(--accent));
+      color: white;
+      border: none;
+      padding: 1rem 1.75rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+
+    .newsletter-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+      background: linear-gradient(135deg, var(--secondary-dark), var(--secondary));
+    }
+
+    /* Footer */
+    footer {
+      background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+      color: white;
+      padding: 4rem 5% 2rem;
+      margin-top: 4rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .footer-container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+    }
+
+    .footer-section h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      color: var(--text-primary);
+      position: relative;
+      display: inline-block;
+    }
+
+    .footer-section h4::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), #93c5fd);
+      border-radius: 2px;
+    }
+
+    .footer-section p {
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .footer-links {
+      list-style: none;
+    }
+
+    .footer-links li {
+      margin-bottom: 0.85rem;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: var(--bg-primary);
+      border-radius: 50%;
+      color: var(--accent);
+      transition: all 0.3s ease;
+      border: 1px solid var(--border);
+    }
+
+    .social-links a:hover {
+      background: linear-gradient(135deg, var(--accent), #93c5fd);
+      color: white;
+      transform: translateY(-5px);
+      box-shadow: 0 8px 15px rgba(96, 165, 250, 0.3);
+    }
+
+    .copyright {
+      text-align: center;
+      padding-top: 2.5rem;
+      margin-top: 2.5rem;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Main book grid */
+    main {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 5% 4rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 2.5rem;
+      background: var(--bg-primary);
+    }
+
+    /* Media queries for responsive design */
+    @media (max-width: 1024px) {
+      main {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 2rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .header-container {
+        flex-wrap: wrap;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        margin-top: 1rem;
+        overflow-x: auto;
+        padding-bottom: 0.5rem;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .search-toggle {
+        display: block;
+        order: 2;
+      }
+
+      .hero h2 {
+        font-size: 2.2rem;
+      }
+
+      .newsletter-form {
+        flex-direction: column;
+      }
+
+      .newsletter-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 640px) {
+      main {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .footer-container {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    /* Show header search when active */
+    .header-search.show {
+      display: block;
+    }
+
+    /* Add subtle patterns and textures */
+    .book-card {
+      background-image: radial-gradient(circle at 20% 80%, rgba(96, 165, 250, 0.01) 0%, transparent 50%);
+    }
+
+    /* Enhanced hover effects */
+    .book-card:hover .book-title {
+      color: var(--accent);
+      transition: color 0.3s ease;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-container">
+    <a href="#" class="logo">
+      <span class="logo-icon">📚</span>
+      <h1>Shopverse</h1>
+    </a>
+    <button class="search-toggle" id="searchToggle">🔍</button>
+    <nav>
+      <a href="./index.html">Home</a>
+      <a href="./login.html">Login</a>
+      <a href="./register.html">Register</a>
+           <a href="#" id="myAccountLink">My Account</a>
+
+      <a href="./ProductPage.html">Products</a>
+      <a href="./checkout.html">Checkout</a>
+      <a href="#" onclick="logout()">Logout</a>
+
+<script>
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userEmail");
+    window.location.href = "login.html";
+  }
+</script>
+
+      <a href="./shoppingcart.html" class="cart-link">Shopping Cart 🛒</a>
+    </nav>
+    <div class="header-search" id="headerSearch">
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search books, authors, or genres...">
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+
+  <section class="hero">
+    <div class="hero-content">
+      <h2>Discover Amazing Products</h2>
+      <p>Explore our vast collection of quality products across all categories. Find everything you need in one place.</p>
+      
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Search by product name, brand, or category...">
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </section>
+
+<section class="collection-header">
+  <h2>Bestselling Products</h2>
+  <p>Our most popular products loved by people all around the world!</p>
+</section>
+
+<main>
+  <!-- Books -->
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/1.jpg" alt="Atomic Habits" />
+      <div class="discount-badge">15% OFF</div>
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Atomic Habits</p>
+        <p class="book-author">by James Clear</p>
+        <div class="rating">
+          <div class="stars">★★★★★</div>
+          <span class="review-count">(2,456)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$16.14</p>
+          <p class="original-price">$18.99</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/14.jpg" alt="Smart Watch" />
+    <div class="discount-badge">25% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Smart Watch Series 7</p>
+      <p class="book-author">by TechTime</p>
+      <div class="rating">
+        <div class="stars">★★★★☆</div>
+        <span class="review-count">(2,345)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$149.99</p>
+        <p class="original-price">$199.99</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/2.jpg" alt="The Alchemist" />
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">The Alchemist</p>
+        <p class="book-author">by Paulo Coelho</p>
+        <div class="rating">
+          <div class="stars">★★★★☆</div>
+          <span class="review-count">(1,892)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$12.50</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/16.jpg" alt="Cotton Hoodie" />
+    <div class="discount-badge">40% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title"> Cotton Hoodie</p>
+      <p class="book-author">by UrbanWear</p>
+      <div class="rating">
+        <div class="stars">★★★★☆</div>
+        <span class="review-count">(876)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$29.99</p>
+        <p class="original-price">$49.99</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/15.jpg" alt="Vitamin C Serum" />
+    <div class="discount-badge">15% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Vitamin C Face Serum</p>
+      <p class="book-author">by GlowNaturals</p>
+      <div class="rating">
+        <div class="stars">★★★★★</div>
+        <span class="review-count">(1,210)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$17.00</p>
+        <p class="original-price">$20.00</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/3.jpg" alt="Deep Work" />
+      <div class="discount-badge">20% OFF</div>
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Deep Work</p>
+        <p class="book-author">by Cal Newport</p>
+        <div class="rating">
+          <div class="stars">★★★★★</div>
+          <span class="review-count">(1,245)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$13.00</p>
+          <p class="original-price">$16.25</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/17.jpg" alt="Air Fryer" />
+    <div class="discount-badge">30% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Digital Air Fryer 5L</p>
+      <p class="book-author">by FryTech</p>
+      <div class="rating">
+        <div class="stars">★★★★☆</div>
+        <span class="review-count">(3,120)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$89.00</p>
+        <p class="original-price">$129.00</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/18.jpg" alt="Wall Clock" />
+    <div class="discount-badge">10% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Vintage Wall Clock</p>
+      <p class="book-author">by DecoTime</p>
+      <div class="rating">
+        <div class="stars">★★★★☆</div>
+        <span class="review-count">(734)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$22.50</p>
+        <p class="original-price">$25.00</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/4.jpg" alt="Ikigai" />
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Ikigai</p>
+        <p class="book-author">by Francesc Miralles</p>
+        <div class="rating">
+          <div class="stars">★★★★☆</div>
+          <span class="review-count">(986)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$14.30</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/19.jpg" alt="Travel Backpack" />
+    <div class="discount-badge">35% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Waterproof Travel Backpack</p>
+      <p class="book-author">by NomadGear</p>
+      <div class="rating">
+        <div class="stars">★★★★★</div>
+        <span class="review-count">(1,045)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$38.99</p>
+        <p class="original-price">$59.99</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/5.jpg" alt="Rich Dad Poor Dad" />
+      <div class="discount-badge">10% OFF</div>
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Rich Dad Poor Dad</p>
+        <p class="book-author">by Robert Kiyosaki</p>
+        <div class="rating">
+          <div class="stars">★★★★☆</div>
+          <span class="review-count">(3,211)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$9.86</p>
+          <p class="original-price">$10.95</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/6.jpg" alt="Start With Why" />
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Start With Why</p>
+        <p class="book-author">by Simon Sinek</p>
+        <div class="rating">
+          <div class="stars">★★★★★</div>
+          <span class="review-count">(1,568)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$15.49</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/7.jpg" alt="The 5 AM Club" />
+      <div class="discount-badge">12% OFF</div>
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">The 5 AM Club</p>
+        <p class="book-author">by Robin Sharma</p>
+        <div class="rating">
+          <div class="stars">★★★★☆</div>
+          <span class="review-count">(943)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$15.83</p>
+          <p class="original-price">$17.99</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/8.jpg" alt="Think Like a Monk" />
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Think Like a Monk</p>
+        <p class="book-author">by Jay Shetty</p>
+        <div class="rating">
+          <div class="stars">★★★★★</div>
+          <span class="review-count">(2,104)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$16.10</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+  
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/9.jpg" alt="Sapiens" />
+      <div class="discount-badge">15% OFF</div>
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Sapiens</p>
+        <p class="book-author">by Yuval Noah Harari</p>
+        <div class="rating">
+          <div class="stars">★★★★★</div>
+          <span class="review-count">(4,321)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$16.53</p>
+          <p class="original-price">$19.45</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/10.jpg" alt="Speak with no Fear" />
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Speak with no Fear</p>
+        <p class="book-author">by Mark Manson</p>
+        <div class="rating">
+          <div class="stars">★★★★☆</div>
+          <span class="review-count">(5,678)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$14.20</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/20.jpg" alt="Study Table" />
+    <div class="discount-badge">18% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Wooden Study Table</p>
+      <p class="book-author">by HomeCraft</p>
+      <div class="rating">
+        <div class="stars">★★★★★</div>
+        <span class="review-count">(624)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$98.40</p>
+        <p class="original-price">$120.00</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/13.jpg" alt="Smartwatch" />
+    <div class="discount-badge">25% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Smartwatch Series 6</p>
+      <p class="book-author">by TechWear</p>
+      <div class="rating">
+        <div class="stars">★★★★☆</div>
+        <span class="review-count">(2,135)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$149.99</p>
+        <p class="original-price">$199.99</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+  <div class="book-card">
+  <div class="book-card-img-container">
+    <img src="PICTURES/21.jpg" alt="Bluetooth Speaker" />
+    <div class="discount-badge">15% OFF</div>
+  </div>
+  <div class="book-info">
+    <div>
+      <p class="book-title">Portable Bluetooth Speaker</p>
+      <p class="book-author">by BoomSound</p>
+      <div class="rating">
+        <div class="stars">★★★★☆</div>
+        <span class="review-count">(1,542)</span>
+      </div>
+    </div>
+    <div>
+      <div class="price-container">
+        <p class="book-price">$42.50</p>
+        <p class="original-price">$50.00</p>
+      </div>
+      <div class="book-card-actions">
+        
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  <div class="book-card">
+    <div class="book-card-img-container">
+      <img src="PICTURES/12.jpg" alt="Power of Habit" />
+    </div>
+    <div class="book-info">
+      <div>
+        <p class="book-title">Power of Habit</p>
+        <p class="book-author">by Charles Duhigg</p>
+        <div class="rating">
+          <div class="stars">★★★★☆</div>
+          <span class="review-count">(2,345)</span>
+        </div>
+      </div>
+      <div>
+        <div class="price-container">
+          <p class="book-price">$16.50</p>
+        </div>
+        <div class="book-card-actions">
+          
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<section class="newsletter">
+  <div class="newsletter-content">
+    <h3>Subscribe to Our Newsletter</h3>
+    <p>Get updates on new releases, exclusive offers, and personalized recommendations straight to your inbox.</p>
+    <form class="newsletter-form">
+      <input type="email" class="newsletter-input" placeholder="Your email address">
+      <button type="submit" class="newsletter-btn">Subscribe</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-container">
+    <div class="footer-section">
+      <h4>Shopverse</h4>
+      <p>Your go-to destination for products of all types, from bestsellers to rare finds.</p>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Shop</h4>
+      <ul class="footer-links">
+        <li><a href="./ProductPage.html">All Products</a></li>
+        <li><a href="./index.html">Bestsellers</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>Customer Service</h4>
+      <ul class="footer-links">
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Shipping & Returns</a></li>
+        <li><a href="#">Order Status</a></li>
+        <li><a href="#">Payment Options</a></li>
+      </ul>
+    </div>
+    
+    <div class="footer-section">
+      <h4>My Account</h4>
+      <ul class="footer-links">
+        <li><a href="./login.html">Log In</a></li>
+        <li><a href="./register.html">Register</a></li>
+        <li><a href="./shoppingcart.html">View Cart</a></li>
+        <li><a href="#">Order History</a></li>
+      </ul>
+    </div>
+  </div>
+  
+  <div class="copyright">
+    &copy; 2025 Shopverse. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // Wait until DOM is fully loaded
+  document.addEventListener('DOMContentLoaded', function () {
+    // Search bar toggle on mobile
+    const searchToggle = document.getElementById('searchToggle');
+    const headerSearch = document.getElementById('headerSearch');
+
+    if (searchToggle && headerSearch) {
+      searchToggle.addEventListener('click', function () {
+        headerSearch.classList.toggle('show');
+      });
+    }
+
+    // Manage navigation links based on login status
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const userEmail = localStorage.getItem("userEmail");
+
+    const loginLink = document.querySelector('a[href="./login.html"]');
+    const registerLink = document.querySelector('a[href="./register.html"]');
+    const logoutBtn = document.querySelector('button[onclick="logout()"]');
+    const myAccountLink = document.getElementById("myAccountLink");
+
+    if (isLoggedIn) {
+      if (loginLink) loginLink.style.display = "none";
+      if (registerLink) registerLink.style.display = "none";
+      if (logoutBtn) logoutBtn.style.display = "inline-block";
+      if (myAccountLink) myAccountLink.style.display = "inline-block";
+    } else {
+      if (loginLink) loginLink.style.display = "inline-block";
+      if (registerLink) registerLink.style.display = "inline-block";
+      if (logoutBtn) logoutBtn.style.display = "none";
+      if (myAccountLink) myAccountLink.style.display = "none";
+    }
+  });
+   
+  // Logout function
+  function logout() {
+    localStorage.removeItem("isLoggedIn");
+    localStorage.removeItem("userEmail");
+    window.location.href = "login.html";
+  }
+</script>
+
+
+</body>
+</html>

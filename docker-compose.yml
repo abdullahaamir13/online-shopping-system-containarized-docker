@@ -1,0 +1,63 @@
+
+services:
+  order-service:
+    build: ./Order_service
+    ports:
+      - "5000:5000"
+    environment:
+      MONGO_URI: mongodb://mongo:27017/OrderService
+    depends_on:
+      - mongo
+      - product-service
+      - shippingservice
+
+  shippingservice:
+    build: ./shippingservice
+    ports:
+      - "5001:5001"
+    depends_on:
+      - mongo
+      - notification-service
+    environment:
+      MONGO_URI: mongodb://mongo:27017/ShippingService
+
+  notification-service:
+    build: ./notification-service
+    ports:
+      - "3007:3007"
+    environment:
+      MONGO_URL: mongodb://mongo:27017/notifications
+      RABBITMQ_URL: amqp://rabbitmq
+
+  product-service:
+    build: ./Product_service
+    ports:
+      - "8000:8000"
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    
+  frontend:
+    build: ./FrontEnd
+    ports:
+      - "8080:80"  
+    depends_on:
+      - order-service
+    networks:
+      - default
+
+
+volumes:
+  mongo_data:

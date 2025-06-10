@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>User Account</title>
+  <style>
+    :root {
+      --primary: #ffffff;
+      --primary-dark: #f8fafc;
+      --primary-light: #1e293b;
+      --secondary: #3b82f6;
+      --secondary-dark: #2563eb;
+      --secondary-light: #1e3a8a;
+      --dark: #ffffff;
+      --dark-blue: #0f172a;
+      --light: #0f172a;
+      --gray: #cbd5e1;
+      --gray-light: #334155;
+      --accent: #60a5fa;
+      --accent-light: #1e293b;
+      --navy: #ffffff;
+      --steel-blue: #94a3b8;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --border-light: #475569;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 20px auto;
+      background-color: var(--bg-primary);
+      color: var(--text-primary);
+    }
+
+    h1, h2 {
+      color: var(--secondary);
+    }
+
+    .section {
+      margin-bottom: 30px;
+      padding: 20px;
+      background: var(--bg-secondary);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--bg-tertiary);
+      color: var(--text-secondary);
+    }
+
+    th, td {
+      padding: 8px;
+      border-bottom: 1px solid var(--border-light);
+      text-align: left;
+    }
+
+    th {
+      background: var(--bg-secondary);
+      color: var(--secondary-light);
+    }
+
+    .track-btn {
+      background-color: var(--secondary);
+      color: var(--text-primary);
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+
+    .track-btn:hover {
+      background-color: var(--secondary-dark);
+    }
+
+    .shipment-status {
+      margin-top: 10px;
+      font-weight: bold;
+      color: var(--accent);
+    }
+
+    button {
+      background-color: var(--secondary);
+      color: var(--text-primary);
+      border: none;
+      padding: 8px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: var(--secondary-dark);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Notification box added here -->
+  <div id="notificationBox" style="padding: 10px; background: #f0f0f0; color: #333;"></div>
+
+  <h1>User Account</h1>
+
+  <!-- Profile Info -->
+  <section class="section" id="profile-section">
+    <h2>Profile Information</h2>
+    <p><strong>Name:</strong> <span id="profile-name"></span></p>
+    <p><strong>Email:</strong> <span id="profile-email"></span></p>
+    <p><strong>Phone:</strong> <span id="profile-phone"></span></p>
+  </section>
+
+  <!-- Order History -->
+  <section class="section" id="orders-section">
+    <h2>Order History</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Track</th>
+        </tr>
+      </thead>
+      <tbody id="orders-tbody">
+        <!-- Orders will be inserted here -->
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Shipment Tracking -->
+  <section class="section" id="shipment-section" style="display:none;">
+    <h2>Shipment Tracking</h2>
+    <p><strong>Order ID:</strong> <span id="shipment-order-id"></span></p>
+    <p><strong>Status:</strong> <span id="shipment-status" class="shipment-status"></span></p>
+    <button onclick="closeTracking()">Close</button>
+  </section>
+
+  <script>
+    const userProfile = {
+      name: "Neelam Jabeen",
+      email: "neelam.jabeen@example.com",
+      phone: "+92 300 1234567"
+    };
+
+    const orders = [
+      { id: "A001", date: "2025-05-10", items: 3, total: "$120.50", shipmentStatus: "In Transit" },
+      { id: "A002", date: "2025-04-15", items: 1, total: "$45.00", shipmentStatus: "Delivered" },
+      { id: "A003", date: "2025-04-01", items: 5, total: "$250.00", shipmentStatus: "Shipped" }
+    ];
+
+    document.getElementById("profile-name").textContent = userProfile.name;
+    document.getElementById("profile-email").textContent = userProfile.email;
+    document.getElementById("profile-phone").textContent = userProfile.phone;
+
+    const tbody = document.getElementById("orders-tbody");
+    orders.forEach(order => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td>${order.id}</td>
+        <td>${order.date}</td>
+        <td>${order.items}</td>
+        <td>${order.total}</td>
+        <td><button class="track-btn" onclick="trackShipment('${order.id}')">Track</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    function trackShipment(orderId) {
+      const order = orders.find(o => o.id === orderId);
+      if (!order) return alert("Order not found");
+
+      document.getElementById("shipment-order-id").textContent = order.id;
+      document.getElementById("shipment-status").textContent = order.shipmentStatus;
+
+      document.getElementById("shipment-section").style.display = "block";
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function closeTracking() {
+      document.getElementById("shipment-section").style.display = "none";
+    }
+  </script>
+
+  <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"></script>
+  <script>
+    const socket = io("http://localhost:3007");
+
+    socket.on("notification", (message) => {
+      const box = document.getElementById("notificationBox");
+      box.innerText = "🔔 " + message;
+    });
+  </script>
+
+</body>
+</html>

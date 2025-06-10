@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        .confirmation-container {
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .notification {
+            padding: 15px;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            color: #155724;
+            margin-top: 20px;
+            display: none;
+        }
+        .back-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .back-button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="confirmation-container">
+        <h1>Order Confirmation</h1>
+        <p><strong>Customer Name:</strong> <span id="customerName"></span></p>
+        <p><strong>Shipping Address:</strong> <span id="shippingAddress"></span></p>
+        <p><strong>Email:</strong> <span id="customerEmail"></span></p>
+        <div id="confirmationNotification" class="notification">
+            <h3>Order Saved Successfully!</h3>
+        </div>
+    </div>
+
+    <script>
+        function displayOrderConfirmation() {
+            console.log("Starting order confirmation process");
+            const orderData = sessionStorage.getItem("orderData");
+
+            if (!orderData) {
+                console.log("No order data found in sessionStorage");
+                document.querySelector(".confirmation-container").innerHTML = `
+                    <h2 style="color: red;">⚠ No Order Found</h2>
+                    <p>Your order details could not be retrieved. Please try placing your order again.</p>
+                    <a href="./index.html" class="back-button">Back to Home</a>
+                `;
+                return;
+            }
+
+            const parsedData = JSON.parse(orderData);
+            console.log("Parsed Order Data:", parsedData);
+
+            document.getElementById("customerName").textContent = parsedData.name || "Not provided";
+            document.getElementById("shippingAddress").textContent = parsedData.address || "Not provided";
+            document.getElementById("customerEmail").textContent = parsedData.email || "Not provided";
+
+            const notification = document.getElementById("confirmationNotification");
+            notification.style.display = "block";
+
+            console.log("Redirecting to index.html in 2 seconds");
+            setTimeout(() => {
+                sessionStorage.removeItem("orderData");
+                window.location.href = "http://localhost:8080/index.html";
+            }, 20);
+        }
+
+        document.addEventListener("DOMContentLoaded", displayOrderConfirmation);
+    </script>
+</body>
+</html>

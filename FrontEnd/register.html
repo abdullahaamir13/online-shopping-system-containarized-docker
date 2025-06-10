@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #2563eb;
+      --secondary: #60a5fa;
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-tertiary: #334155;
+      --text-primary: #ffffff;
+      --text-secondary: #cbd5e1;
+      --text-muted: #94a3b8;
+      --border: #334155;
+      --accent: #60a5fa;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, var(--bg-primary), var(--bg-secondary));
+      color: var(--text-primary);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      right: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 60%);
+      z-index: 0;
+    }
+
+    .auth-container {
+      background: var(--bg-secondary);
+      backdrop-filter: blur(12px);
+      padding: 3rem;
+      border-radius: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+      z-index: 1;
+      position: relative;
+      border: 1px solid var(--border);
+      animation: fadeInUp 0.5s ease-out;
+    }
+
+    .auth-container h2 {
+      margin-bottom: 1rem;
+      font-weight: 700;
+      font-size: 1.8rem;
+      color: var(--text-primary);
+      position: relative;
+    }
+
+    .auth-container h2::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60px;
+      height: 3px;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      border-radius: 3px;
+    }
+
+    .auth-container form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .auth-container input {
+      padding: 0.8rem 1rem;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      background-color: var(--bg-tertiary);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+    }
+
+    .auth-container input::placeholder {
+      color: var(--text-muted);
+    }
+
+    .auth-container input:focus {
+      border-color: var(--accent);
+      outline: none;
+      background-color: var(--bg-primary);
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.1);
+    }
+
+    .auth-container button {
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      padding: 0.8rem;
+      border-radius: 10px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(59, 130, 246, 0.25);
+    }
+
+    .auth-container button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+    }
+
+    .auth-link {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-secondary);
+    }
+
+    .auth-link a {
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .auth-link a:hover {
+      color: var(--text-primary);
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .auth-container {
+        padding: 2rem;
+        margin: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Register</h2>
+    <form id="registerForm">
+      <input type="text" name="username" placeholder="Full Name" required />
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <input type="password" name="confirmPassword" placeholder="Confirm Password" required />
+      <button type="submit">Register</button>
+    </form>
+    <p class="auth-link">Already have an account? <a href="login.html">Login</a></p>
+  </div>
+<script>
+  document.getElementById("registerForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    const email = event.target.email.value.trim();
+    const password = event.target.password.value;
+
+    if (!email || !password || password.length < 6) {
+      alert("Please fill all fields. Password must be at least 6 characters.");
+      return;
+    }
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+
+    const existingUser = users.find((user) => user.email === email);
+
+    if (existingUser) {
+      alert("User already registered. Please log in.");
+      return;
+    }
+
+    users.push({ email, password });
+    localStorage.setItem("users", JSON.stringify(users));
+
+    alert("Registration successful! You can now log in.");
+    window.location.href = "login.html";
+  });
+</script>
+
+</body>
+</html>

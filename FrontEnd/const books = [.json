@@ -1,0 +1,34 @@
+const books = [
+  {
+    id: "1",
+    title: "The Midnight Library",
+    author: "Matt Haig",
+    description: "A beautiful story about regrets, hope, and second chances in the infinite library of alternate lives.",
+    price: 399,
+    image: "https://m.media-amazon.com/images/I/71y5Z6WfZZL.jpg"
+  },
+  {
+    id: "2",
+    title: "Atomic Habits",
+    author: "James Clear",
+    description: "An easy & proven way to build good habits and break bad ones, backed by science and psychology.",
+    price: 499,
+    image: "https://m.media-amazon.com/images/I/91bYsX41DVL.jpg"
+  },
+  {
+    id: "3",
+    title: "Ikigai",
+    author: "Francesc Miralles & Héctor García",
+    description: "A guide to discovering your reason for being—the Japanese secret to a long and happy life.",
+    price: 299,
+    image: "https://m.media-amazon.com/images/I/814L+vq01mL.jpg"
+  },
+  {
+    id: "4",
+    title: "Sapiens: A Brief History of Humankind",
+    author: "Yuval Noah Harari",
+    description: "A sweeping narrative exploring the history and impact of Homo sapiens on the world.",
+    price: 649,
+    image: "https://m.media-amazon.com/images/I/713jIoMO3UL.jpg"
+  }
+];
