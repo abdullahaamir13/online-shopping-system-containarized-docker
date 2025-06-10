@@ -36,7 +36,7 @@ The system follows a dependency chain:
 - **Team C (Product Service)**: Leads - Muhammad Abdullah & Rohail Nawaz; Members - Sultan Mehmood Mughal, Hafiz Zarar, Abdullah Bilal, Faran Ahmad.
 - **Team D (Order Service)**: Leads - Mustafa & Hamza; Members - Awais Bin Abdul Khaliq, Faris Ahmed, Munhib Baig, Usman, Rohail Iqbal.
 - **Team E (Payment Service)**: Leads - Saim Haider & Zaighum Zarawar; Members - Usman, Muzammil Waheed, Muhammad Hamza, Hafiz Muhammad Abdullah.
-- **Team F (Shipping Service)**: Lead - Muhammad Abdullah Amir; Members - Bakht Nasir, Abdul Wakeel, Ahmed Ali, Abdullah Khan, Hafiz Abdur Rehman.
+- **Team F (Shipping Service)**: Lead - Muhammad Abdullah Aamir; Members - Bakht Nasir, Abdul Wakeel, Ahmed Ali, Abdullah Khan, Hafiz Abdur Rehman.
 - **Team G (Notification Service)**: Lead - Hashim Abdullah; Members - Misbah Ur Rehman, Imran Ullah, Ubaid Malik, Hammad Hassan, Aqsam Qureshi.
 
 ## Setup Instructions
